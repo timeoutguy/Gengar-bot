@@ -1,0 +1,17 @@
+{
+  "name": "gado-do-estado",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --inspect src/index.js"
+  },
+  "author": "Gordon",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
