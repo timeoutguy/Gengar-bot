@@ -9,19 +9,15 @@ client.login(login.token); //fazendo login no client
 const comandos = {
   gado(msg) {
     msg.reply('Para ver meus comandos digite "gado_help"');
-    let desc = "Exibe a lista de comandos";
   },
   gado_abortar(msg) {
     msg.reply('Abortar é bom d++++');
-    let desc = "Opinião do bot sobe abortar";
   },
   gado_ancap(msg) {
     msg.reply('Todo ancap é incel');
-    let desc = "Opinião do bot sobe os ancaps"
   },
   gado_imposto(msg) {
     msg.reply('É roubo')
-    let desc = "Opinião do bot sobe imposto"
   },
 }
 
@@ -42,11 +38,16 @@ client.on("message", msg => {
   let messageContent = msg.content; //Armazenando o conteudo da mensagem
   let command = comandos[messageContent.toLowerCase()]; //Buscando o comando no objeto
 
+  if(msg.author.bot) return;
+  if(msg.channel.type === "dm") return;
+
   //Verificando se o comando existe
   if (command) {
     command(msg)
   }
   if (messageContent === "gado_help") {
-    //USAR FOR IN PARA LISTAR OS COMANDOS
+    for (const command in comandos) {
+      msg.channel.send(command)
+    }
   }
 });
