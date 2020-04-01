@@ -1,53 +1,50 @@
 const Discord = require('discord.js'); //Importando discord.js
 const client = new Discord.Client(); //Iniciando o client
 
-const login = require('./login.json'); //Importando o token de login do bot
+const config = require('./config.json'); //Importando o token de login do bot
+const commands = require('./commands/comandos') //Objeto com os comanndos do bot
 
-client.login(login.token); //fazendo login no client
+const prefix = config.prefix; // Prefixo
+const active = new Map();
 
-//Objeto com os comanndos do bot
-const comandos = {
-  gado(msg) {
-    msg.reply('Para ver meus comandos digite "gado_help"');
-  },
-  gado_abortar(msg) {
-    msg.reply('Abortar é bom d++++');
-  },
-  gado_ancap(msg) {
-    msg.reply('Todo ancap é incel');
-  },
-  gado_imposto(msg) {
-    msg.reply('É roubo')
-  },
-}
+client.login(config.token); //fazendo login no client
 
 //Quando o bot estiver pronto ele era imprimir uma mensagem no console
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+
+  client.user.setPresence({
+    status: "online",
+    game:{
+      name: "Estou comendo o cu de quem ta lendo",
+      type: "PLAYING"
+    }
+  })
 });
-
-//Mensagem de boas vindas
-client.on('guildMemberAdd', member => {
-  let channel = member.guild.channels.find(ch => ch.name === 'bem-vindo');
-
-  channel.send(`Bem vindo ao servidor, ${member}. Para ver meus comandos digite "gado_help"`);
-})
-
 //Recebe mensagem do usuario
 client.on("message", msg => {
-  let messageContent = msg.content; //Armazenando o conteudo da mensagem
-  let command = comandos[messageContent.toLowerCase()]; //Buscando o comando no objeto
 
-  if(msg.author.bot) return;
-  if(msg.channel.type === "dm") return;
+  if (!msg.content.startsWith(prefix) || msg.author.bot || !msg.guild) return;
 
-  //Verificando se o comando existe
-  if (command) {
-    command(msg)
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+
+  const command = args.shift().toLowerCase()
+
+  if(!commands[command]){
+    const embed = new Discord.RichEmbed()
+      .setTitle(":x: Erro")
+      .setColor("#7510f7")
+      .setDescription(`O comando ${command} não existe`);
+
+    msg.channel.send(embed)
+
+    return;
   }
-  if (messageContent === "gado_help") {
-    for (const command in comandos) {
-      msg.channel.send(command)
-    }
+
+  let ops = {
+    active: active
   }
+
+  commands[command].run(client, msg, args, ops)
+  
 });
