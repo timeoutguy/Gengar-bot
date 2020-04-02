@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "set NODE_ENV=development&&npm start",
+    "production": "NODE_ENV=production&&npm start"
   },
   "author": "timeoutguy",
   "license": "ISC",

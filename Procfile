@@ -1,1 +1,1 @@
-build: node src/index.js
+worker npm run production
