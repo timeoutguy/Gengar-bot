@@ -16,6 +16,7 @@ exports.run = (client, msg, args) => {
         return msg.channel.send(embed).then(msg.delete())
     }
 
+
     const embed = new RichEmbed()
         .setColor("#008000")
         .setTitle("Conta")

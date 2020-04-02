@@ -11,9 +11,9 @@ exports.run = async (client, msg, args) => {
         return msg.channel.send(embed)
     }
 
-    const user = msg.guild.member(msg.mentions.users.first())
+    const mentions = msg.guild.member(msg.mentions.users.first());
 
-    if (!user) {
+    if (!mentions) {
         const embed = new RichEmbed()
             .setColor("#ff0000")
             .setTitle(":x: Erro")
@@ -38,12 +38,12 @@ exports.run = async (client, msg, args) => {
     }
 
 
-    user.kick([reason])
+    await mentions.kick([reason]);
 
     const embed = new RichEmbed()
         .setColor("#ff9900")
         .setTitle(`Expulsão`)
-        .addField("Usuário expulso", `<@${user.user.id}>`)
+        .addField("Usuário expulso", `<@${mentions.1.id}>`)
         .addField("Expulso por", `<@${msg.author.id}>`)
         .addField("Motivo", reason)
         .addField("Horário", msg.createdAt)
