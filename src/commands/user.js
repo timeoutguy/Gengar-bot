@@ -21,7 +21,7 @@ exports.run = (client, msg, args) => {
         .addField("Username", user.username, true)
         .addField("Código", `#${user.discriminator}`, true)
         .setTimestamp()
-        .setFooter("GengarBot")
+        .setFooter("GengarBot");
 
     return msg.channel.send(embed).then(msg.delete())
 }
