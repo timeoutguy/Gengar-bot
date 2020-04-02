@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
+    "@discordjs/uws": "10.149.0",
     "axios": "^0.19.2",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",

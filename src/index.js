@@ -5,9 +5,7 @@ require('dotenv').config();
 const PREFIX = process.env.PREFIX; // Prefixo
 const TOKEN = process.env.CLIENT_TOKEN;
 
-console.log(TOKEN)
-
-client.login(TOKEN); //fazendo login no client
+client.login(TOKEN).then(console.log("To rodando")); //fazendo login no client
 
 //Quando o bot estiver pronto ele exibe uma mensagem no console
 client.on("ready", () => {

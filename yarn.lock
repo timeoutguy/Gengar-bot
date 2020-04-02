@@ -10,6 +10,11 @@
     node-addon-api "^2.0.0"
     node-pre-gyp "^0.14.0"
 
+"@discordjs/uws@10.149.0":
+  version "10.149.0"
+  resolved "https://registry.yarnpkg.com/@discordjs/uws/-/uws-10.149.0.tgz#5ec3d12aa140aea402ad8bfabeddb2986a371bb9"
+  integrity sha512-N1wjoAD2DOgzevqzyTOWTgyO2divX03JWNQx4JHm/jQ/BRzZNkhwVRO3RC5Guww+srdgs4Tw4gwrzlJrlOhq/Q==
+
 "@types/node@^13.5.3":
   version "13.9.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.8.tgz#09976420fc80a7a00bf40680c63815ed8c7616f4"
