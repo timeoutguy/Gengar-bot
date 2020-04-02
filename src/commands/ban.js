@@ -1,6 +1,8 @@
 const { RichEmbed } = require("discord.js");
 
-exports.run = async (client, msg, args) => { 
+exports.run = async (client, msg, args) => {
+    //Verificando se o usuario que enviou a mensoagem possui permissão para banir
+    //Caso não tenha ele envia uma mensagem de erro
     if (!msg.member.hasPermission(['BAN_MEMBERS'])) {
         const embed = new RichEmbed()
             .setColor("#ff0000")
@@ -11,9 +13,11 @@ exports.run = async (client, msg, args) => {
         return msg.channel.send(embed)
     }
 
-    const user = msg.guild.member(msg.mentions.users.first())
+    //Armazenando o usuario mencionado em uma variavel
+    const mentions = msg.guild.member(msg.mentions.users.first())
 
-    if (!user) {
+    //Se nenhum usuario for mencionado ele envia uma mensagem de erro
+    if (!mentions) {
         const embed = new RichEmbed()
             .setColor("#ff0000")
             .setTitle(":x: Erro")
@@ -23,10 +27,12 @@ exports.run = async (client, msg, args) => {
         return msg.channel.send(embed)
     }
 
-    args.shift(0);
+    args.shift(0); //Removendo o usuario mencionado dos args
 
-    const reason = args.join(" ");
+    const reason = args.join(" "); //Armazenando o motivo
 
+
+    // Se o motivo for undefined ele envia uma mensagem de erro
     if (!reason) {
         let embed = new RichEmbed()
             .setColor("#ff0000")
@@ -37,13 +43,13 @@ exports.run = async (client, msg, args) => {
         return msg.channel.send(embed)
     }
 
+    await mentions.ban() // Banindo o usuario
 
-    user.kick([reason])
-
+   //Definindo mensagem do ban
     const embed = new RichEmbed()
         .setColor("#ff0000")
         .setTitle(`🔨 Ban`)
-        .addField("Usuário banido", `<@${user.user.id}>`)
+        .addField("Usuário banido", `<@${mentions.user.id}>`)
         .addField("Banido por", `<@${msg.author.id}>`)
         .addField("Motivo", reason)
         .addField("Horário", msg.createdAt)
@@ -52,6 +58,8 @@ exports.run = async (client, msg, args) => {
         .setTimestamp()
         .setFooter("GengarBot");
 
-    const kickChannel = msg.guild.channels.find(`name`, "🔥│punição");
-    return kickChannel.send(embed).then(msg.delete());
+    //Definindo o canal pra enviar a mensaagem de ban
+    const banChannel = msg.guild.channels.find(`name`, "🔥│punição");
+    //Mensagem enviada no canal "🔥│punição" informando os dados do ban
+    return banChannel.send(embed).then(msg.delete());
 }
