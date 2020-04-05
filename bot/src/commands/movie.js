@@ -1,11 +1,11 @@
 const { RichEmbed } = require('discord.js');
-const axios = require('axios').default
+const axios = require('axios').default;
 
 const API_KEY = "f70e0643c5fb15cdc6c02c8721a54994"
 
 exports.run = async (client, msg, args) => {
 
-    const movie = args.join(" ")
+    const movie = args.join(" ");
 
     let movieDetails;
 
@@ -20,7 +20,7 @@ exports.run = async (client, msg, args) => {
                 .setTitle(":x: Erro")
                 .setDescription(`Um erro ocorreu :disappointed:`)
                 .setTimestamp()
-                .setFooter("GengarBot")
+                .setFooter("GengarBot");
             return msg.channel.send(embed).msg.delete()
         })
 
@@ -30,8 +30,8 @@ exports.run = async (client, msg, args) => {
                 .setTitle(":x: Erro")
                 .setDescription(`Filme ${movie} não encontrado :frowning: `)
                 .setTimestamp()
-                .setFooter("GengarBot")
-            return msg.channel.send(embed).msg.delete()
+                .setFooter("GengarBot");
+            return msg.channel.send(embed).delete()
         }
 
         const embed = new RichEmbed()
@@ -42,6 +42,6 @@ exports.run = async (client, msg, args) => {
             .addField("Pesquisa feita por", `<@${msg.author.id}>`)
             .setImage(`http://image.tmdb.org/t/p/w185${movieDetails.poster_path}`)
             .setTimestamp()
-            .setFooter("GengarBot")
+            .setFooter("GengarBot");
         return msg.channel.send(embed).then(msg.delete())
 }

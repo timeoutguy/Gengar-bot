@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "set NODE_ENV=development&&npm start",
+    "dev": "set NODE_ENV=development&&nodemon src/index.js",
     "production": "NODE_ENV=production&&npm start"
   },
   "author": "timeoutguy",
