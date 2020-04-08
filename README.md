@@ -1,5 +1,4 @@
 # Gado do Estado Bot
-<<<<<<< HEAD
 Um projeto que usei para aprender novas skills com node.js
 
 # Exemplo de utilização do bot
