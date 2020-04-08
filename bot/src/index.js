@@ -5,7 +5,7 @@ require('dotenv').config();
 const PREFIX = process.env.PREFIX; // Prefixo
 const TOKEN = process.env.CLIENT_TOKEN;
 
-client.login(TOKEN).then(console.log("To rodando")); //fazendo login no client
+client.login(TOKEN) //fazendo login no client
 
 //Quando o bot estiver pronto ele exibe uma mensagem no console
 client.on("ready", () => {
@@ -22,9 +22,10 @@ client.on("ready", () => {
 
 //Recebe mensagem do usuario
 client.on("message", msg => {
-
-  if (!msg.content.startsWith(PREFIX) || msg.author.bot || !msg.guild) return; //Caso a mensagem seja do proprio bot, comece sem o prefixo ou seja enviada  fora do server ele para
-
+  
+  //Caso a mensagem seja do proprio bot, comece sem o prefixo ou seja enviada na DM, a mensagem é ignorada
+  if (!msg.content.startsWith(PREFIX) || msg.author.bot || !msg.guild) return; 
+  
   const args = msg.content.slice(PREFIX.length).trim().split(/ +/g); //removendo o prefixo da mensagem
 
   const command = args.shift().toLowerCase()  //Separado o comando dos argumentos
