@@ -1,4 +1,4 @@
-# Gado do Estado Bot
+# Gengar Bot
 Um projeto que usei para aprender novas skills com node.js
 
 # Exemplo de utilização do bot
