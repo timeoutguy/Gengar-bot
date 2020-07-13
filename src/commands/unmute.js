@@ -1,38 +1,28 @@
-const { RichEmbed } = require('discord.js');
+import { RichEmbed } from 'discord.js';
+import errorMessage from '../utils/errorMessage';
 
-exports.run = (client, msg, args) => {
-    if (!msg.member.hasPermission(['MUTE_MEMBERS'])) {
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("Você não tem essa permissão")
-            .setTimestamp()
-            .setFooter("GengarBot")
-        return msg.channel.send(embed)
-    }
+exports.run = (client, msg) => {
+  if (!msg.member.hasPermission(['MUTE_MEMBERS'])) {
+    msg.channel.send(errorMessage('Você não tem essa permissão'));
+    return msg.delete();
+  }
 
-    const mentions =  msg.guild.member(msg.mentions.users.first());
+  const mentions = msg.guild.member(msg.mentions.users.first());
 
-    if(!mentions){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("Você não informou o alvo")
-            .setTimestamp()
-            .setFooter("GengarBot")
-        return msg.channel.send(embed)
-    }
+  if (!mentions) {
+    msg.channel.send(errorMessage('Você não informou o alvo'));
+    return msg.delete();
+  }
 
-    mentions.setMute(false)
+  mentions.setMute(false);
 
-    const embed = new RichEmbed()
-        .setColor("#008000")
-        .setTitle(":white_check_mark: Pode falar bosta denovo")
-        .setDescription(`O <@${mentions.user.id}> pode voltar a falar`)
-        .addField("Unmute por",  `<@${msg.author.id}>`)
-        .setTimestamp()
-        .setFooter("GengarBot")
+  const embed = new RichEmbed()
+    .setColor('#008000')
+    .setTitle(':white_check_mark: Pode falar bosta denovo')
+    .setDescription(`O <@${mentions.user.id}> pode voltar a falar`)
+    .addField('Unmute por', `<@${msg.author.id}>`)
+    .setTimestamp()
+    .setFooter('GengarBot');
 
-    return msg.channel.send(embed).then(msg.delete());
-
-}
+  return msg.channel.send(embed).then(msg.delete());
+};

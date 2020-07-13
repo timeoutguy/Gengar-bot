@@ -11,7 +11,11 @@
   "author": "timeoutguy",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^1.19.1",
+    "sucrase": "^3.15.0"
   },
   "dependencies": {
     "@discordjs/opus": "^0.1.0",

@@ -7,14 +7,9 @@ exports.run = (client, msg, args) => {
     const password = args[2]; //Extraindo a senha do Args
 
     //Se algum dos argumentos for vazio envia uma mensagem de erro
-    if(!site || !login || !password){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription(`Você não informou todos os dados`)
-            .setTimestamp()
-            .setFooter("GengarBot");
-        return msg.channel.send(embed).then(msg.delete());
+    if (!site || !login || !password) {
+        msg.channel.send(errorMessage("Você não informou todos os dados"))
+        return msg.delete()
     }
 
     //Definindo mensagem com os dados da conta

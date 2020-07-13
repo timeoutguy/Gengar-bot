@@ -1,4 +1,4 @@
-const Discord = require('discord.js'); //Importando discord.js
+const Discord = require('discord.js');
 const client = new Discord.Client(); //Iniciando o client
 require('dotenv').config();
 
@@ -7,9 +7,8 @@ const TOKEN = process.env.CLIENT_TOKEN;
 
 client.login(TOKEN) //fazendo login no client
 
-//Quando o bot estiver pronto ele exibe uma mensagem no console
 client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`); //Mensagem exibida quando o bot está online
+  console.log(`Logged in as ${client.user.tag}!`);
 
   client.user.setPresence({
     status: "online", //Status do bot
@@ -24,7 +23,7 @@ client.on("ready", () => {
 client.on("message", msg => {
 
   //Caso a mensagem seja do proprio bot, comece sem o prefixo ou seja enviada na DM, a mensagem é ignorada
-  if (!msg.content.startsWith(PREFIX) || msg.author.bot || !msg.guild) return; 
+  if (!msg.content.startsWith(PREFIX) || msg.author.bot || !msg.guild) return;
 
   const args = msg.content.slice(PREFIX.length).trim().split(/ +/g); //removendo o prefixo da mensagem
 
@@ -38,9 +37,9 @@ client.on("message", msg => {
   } catch (err) {
 
     const embed = new Discord.RichEmbed() //Definindo mensagem caso o comanndo não exista
-        .setTitle(":x: Erro")
-        .setColor("#7510f7")
-        .setDescription(`O comando ${command} não existe`);
+      .setTitle(":x: Erro")
+      .setColor("#7510f7")
+      .setDescription(`O comando ${command} não existe`);
 
     console.log(err)
 

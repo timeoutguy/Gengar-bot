@@ -1,51 +1,34 @@
-const { RichEmbed } = require('discord.js');
+import { RichEmbed } from 'discord.js';
+import errorMessage from '../utils/errorMessage';
 
-exports.run = (client, msg, args) => {
+exports.run = (client, msg) => {
+  // Verificando se o autor da mensagem está em uma sala de voz
+  if (!msg.member.voiceChannel) {
+    msg.channel.send(errorMessage('Conecte-se a um canal'));
+    return msg.delete();
+  }
 
-    //Verificando se o autor da mensagem está em uma sala de voz
-    if (!msg.member.voiceChannel) {
-        let embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("Conecte-se a um canal")
-            .setTimestamp()
-            .setFooter("GengarBot")
-        return msg.channel.send(embed)
-    }
+  // Verificando se o bot está em uma sala de voz
+  if (!msg.guild.me.voiceChannel) {
+    msg.channel.send(errorMessage('O bot não está em nenhuma sala'));
+    return msg.delete();
+  }
 
-    //Verificando se o bot está em uma sala de voz
-    if (!msg.guild.me.voiceChannel) {
-        let embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("O bot não está em nenhuma sala")
-            .setTimestamp()
-            .setFooter("GengarBot")
-        return msg.channel.send(embed)
-    }
+  // Verificando se o bot e o autor estão na mesma sala de voz
+  if (msg.guild.me.voiceChannelID !== msg.member.voiceChannelID) {
+    msg.channel.send(errorMessage('Você e o bot não estão na mesma sala'));
+    return msg.delete();
+  }
 
-    //Verificando se o bot e o autor estão na mesma sala de voz
-    if (msg.guild.me.voiceChannelID !== msg.member.voiceChannelID) {
-        let embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("Você e o bot não estão na mesma sala")
-            .setTimestamp()
-            .setFooter("GengarBot")
-        return msg.channel.send(embed)
-    }
+  msg.guild.me.voiceChannel.leave(); // Bot saindo da sala
 
-    msg.guild.me.voiceChannel.leave();  //Bot saindo da sala
+  msg.delete(); // Deletando mensagem do
 
-    msg.delete() //Deletando mensagem do
-
-    let embed = new RichEmbed()
-        .setColor("#7510f7")
-        .setTitle(":wave:  Bye")
-        .setDescription(`O bot foi removido com sucesso por ${msg.author}`)
-        .setTimestamp()
-        .setFooter("GengarBot")
-    return msg.channel.send(embed)
-
-
-}
+  const embed = new RichEmbed()
+    .setColor('#7510f7')
+    .setTitle(':wave:  Bye')
+    .setDescription(`O bot foi removido com sucesso por ${msg.author}`)
+    .setTimestamp()
+    .setFooter('GengarBot');
+  return msg.channel.send(embed);
+};

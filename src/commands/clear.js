@@ -1,49 +1,30 @@
 const { RichEmbed } = require('discord.js');
+import errorMessage from '../utils/errorMessage';
 
 exports.run = async (client, msg, args) => {
-    if(!msg.member.hasPermission('MANAGE_CHANNELS')){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("Você não tem essa permissão")
-            .setTimestamp()
-            .setFooter("GengarBot");
-        return msg.channel.send(embed)
+    if (!msg.member.hasPermission('MANAGE_CHANNELS')) {
+        msg.channel.send(errorMessage("Você não tem essa permissão"))
+        return msg.delete()
     }
 
     const messagesToDelete = parseInt(args) + 1;
 
-    if(messagesToDelete === NaN){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("O número digitado é inválido")
-            .setTimestamp()
-            .setFooter("GengarBot");
-        return msg.channel.send(embed)
+    if (messagesToDelete === NaN) {
+        msg.channel.send(errorMessage("O número digitado é inválido"))
+        return msg.delete()
     }
 
-    if(messagesToDelete < 2){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("O número de mensagens deletadas não pode ser menor que 1")
-            .setTimestamp()
-            .setFooter("GengarBot");
-        return msg.channel.send(embed)
+    if (messagesToDelete < 2) {
+        msg.channel.send(errorMessage("O número de mensagens deletadas não pode ser menor que 1"))
+        return msg.delete()
     }
 
-    if(messagesToDelete > 100){
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setTitle(":x: Erro")
-            .setDescription("O número digitado não pode ser maior que 100")
-            .setTimestamp()
-            .setFooter("GengarBot");
-        return msg.channel.send(embed)
+    if (messagesToDelete > 100) {
+        msg.channel.send(errorMessage("O número digitado não pode ser maior que 100"))
+        return msg.delete()
     }
 
-    await msg.channel.fetchMessages({limit: messagesToDelete })
+    await msg.channel.fetchMessages({ limit: messagesToDelete })
         .then(messages => {
             msg.channel.bulkDelete(messages);
         });
